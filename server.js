@@ -19,9 +19,9 @@ function logger(req, res, next) {
 // if not, send back status code 401 and a message
 
 function gateKeeper(req, res, next) {
-  const password - req.headers.password;
+  const password = req.headers.password;
 
-  if (passord && password.toLowerCase() === 'mellon') {
+  if (password && password.toLowerCase() === 'mellon') {
     next();
   } else {
     res.status(401).json({ message: 'Password is incorrect.' })
@@ -48,7 +48,7 @@ server.get("/echo", (req, res) => {
   res.send(req.headers);
 });
 
-server.get("/area51", helmet(), (req, res) => {
+server.get("/area51", gateKeeper, (req, res) => {
   res.send(req.headers);
 });
 
